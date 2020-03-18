@@ -1,0 +1,10 @@
+03:40:44 **** Incremental Build of configuration Debug for project DigitalOTATremolo_SW ****
+make -j4 all 
+arm-none-eabi-size   DigitalOTATremolo_SW.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8304	   2068	   1852	  12224	   2fc0	DigitalOTATremolo_SW.elf
+Finished building: default.size.stdout
+ 
+
+03:40:44 Build Finished. 0 errors, 0 warnings. (took 523ms)
+
