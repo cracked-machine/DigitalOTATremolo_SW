@@ -3,4 +3,4 @@
 //org.eclipse.debug.core.PREFERRED_DELEGATES/org.eclipse.cdt.launch.postmortemLaunchType=org.eclipse.cdt.dsf.gdb.launch.coreCLaunch,debug,;
 //org.eclipse.debug.core.PREFERRED_DELEGATES/org.eclipse.cdt.launch.remoteApplicationLaunchType=org.eclipse.rse.remotecdt.dsf.debug,debug,;
 eclipse.preferences.version=1
-prefWatchExpressions=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<watchExpressions/>\n
+prefWatchExpressions=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<watchExpressions>\n<expression enabled\="true" text\="sine1_toggle"/>\n<expression enabled\="true" text\="x"/>\n<expression enabled\="true" text\="y"/>\n<expression enabled\="true" text\="w"/>\n<expression enabled\="true" text\="h"/>\n<expression enabled\="true" text\="xpos"/>\n<expression enabled\="true" text\="ypos"/>\n<expression enabled\="true" text\="TIM15-&gt;CCR1"/>\n</watchExpressions>\n

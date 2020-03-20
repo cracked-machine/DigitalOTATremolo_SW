@@ -36,5 +36,10 @@
 			<type>2</type>
 			<location>/home/chris/Projects/Embedded/DigitalOTATremolo_SW/SineWaveTable</location>
 		</link>
+		<link>
+			<name>ssd1306</name>
+			<type>2</type>
+			<location>/home/chris/Projects/Embedded/DigitalOTATremolo_SW/stm32-ssd1306/ssd1306</location>
+		</link>
 	</linkedResources>
 </projectDescription>

@@ -1,4 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;DigitalOTATremolo_SW/SineWaveTable&apos;" deleteContents="false" description="Delete resource &apos;DigitalOTATremolo_SW/SineWaveTable&apos;" element1="/DigitalOTATremolo_SW/SineWaveTable" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1584502761921"/>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;DigitalOTATremolo_SW/SineWaveTable&apos;" deleteContents="false" description="Delete resource &apos;DigitalOTATremolo_SW/SineWaveTable&apos;" element1="/DigitalOTATremolo_SW/SineWaveTable" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1584502761921"/>&#x0A;<refactoring comment="Delete resource &apos;DigitalOTATremolo_SW/stm32-ssd1306&apos;" deleteContents="false" description="Delete resource &apos;DigitalOTATremolo_SW/stm32-ssd1306&apos;" element1="/DigitalOTATremolo_SW/stm32-ssd1306" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1584552569351"/>
 </session>

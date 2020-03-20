@@ -42,7 +42,12 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
+extern uint8_t sine1_toggle;
+extern uint8_t sine2_toggle;
+extern uint32_t tap_count;
+extern uint8_t display_flash;
+extern uint8_t sin1_max_arr;
+extern uint8_t sin2_max_arr;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -58,6 +63,15 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define SIN1_TAPTEMPO_EXTI13_Pin GPIO_PIN_13
+#define SIN1_TAPTEMPO_EXTI13_GPIO_Port GPIOC
+#define SIN1_TAPTEMPO_EXTI13_EXTI_IRQn EXTI4_15_IRQn
+#define SINE1_TOGGLE_EXTI1_Pin GPIO_PIN_1
+#define SINE1_TOGGLE_EXTI1_GPIO_Port GPIOC
+#define SINE1_TOGGLE_EXTI1_EXTI_IRQn EXTI0_1_IRQn
+#define SINE2_TOGGLE_EXTI2_Pin GPIO_PIN_2
+#define SINE2_TOGGLE_EXTI2_GPIO_Port GPIOC
+#define SINE2_TOGGLE_EXTI2_EXTI_IRQn EXTI2_3_IRQn
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

@@ -23,6 +23,8 @@
 #include "stm32f0xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "ssd1306.h"
+#include "tim.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,12 +54,24 @@
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void update_metronome()
+{
+	TIM6->PSC = TIM2->CNT;
+    TIM7->PSC = TIM3->CNT;
+	 ssd1306_Fill(Black);
 
+    if(sine1_toggle)
+    	ssd1306_DrawRectangle(5, 10, 5, 5, White);
+    if(sine2_toggle)
+    	ssd1306_DrawRectangle(75, 10, 5, 5, White);
+    ssd1306_UpdateScreen();
+}
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_dac_ch1;
 extern DMA_HandleTypeDef hdma_dac_ch2;
+extern TIM_HandleTypeDef htim14;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -141,6 +155,72 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles EXTI line 0 and 1 interrupts.
+  */
+void EXTI0_1_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI0_1_IRQn 0 */
+	TIM6->CR1 ^= TIM_CR1_CEN;
+  /* USER CODE END EXTI0_1_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
+  /* USER CODE BEGIN EXTI0_1_IRQn 1 */
+
+  /* USER CODE END EXTI0_1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles EXTI line 2 and 3 interrupts.
+  */
+void EXTI2_3_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI2_3_IRQn 0 */
+	TIM7->CR1 ^= TIM_CR1_CEN;
+  /* USER CODE END EXTI2_3_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_2);
+  /* USER CODE BEGIN EXTI2_3_IRQn 1 */
+
+  /* USER CODE END EXTI2_3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles EXTI line 4 to 15 interrupts.
+  */
+void EXTI4_15_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI4_15_IRQn 0 */
+
+		// is tim15 already running?
+		if(TIM15->CR1 & TIM_CR1_CEN)
+		{
+			// stop the timer
+			tap_count = TIM15->CNT;
+			TIM15->CR1 &= ~TIM_CR1_CEN;
+
+			// make sure timer cnt doesn't overflow!
+			if((sin1_max_arr - (tap_count/16)) > 64)
+				TIM2->CNT = 0;
+			else
+				TIM2->CNT = sin1_max_arr - (tap_count/16);
+			//HAL_TIM_Base_Stop(&htim15);
+
+		}
+		else
+		{
+			// start the timer
+			TIM15->CNT = 0;
+			TIM15->CR1 |= TIM_CR1_CEN;
+			//HAL_TIM_Base_Start(&htim15);
+		}
+
+
+  /* USER CODE END EXTI4_15_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
+  /* USER CODE BEGIN EXTI4_15_IRQn 1 */
+
+  /* USER CODE END EXTI4_15_IRQn 1 */
+}
+
+/**
   * @brief This function handles DMA1 channel 2 and 3 interrupts.
   */
 void DMA1_Channel2_3_IRQHandler(void)
@@ -166,6 +246,58 @@ void DMA1_Channel4_5_6_7_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Channel4_5_6_7_IRQn 1 */
 
   /* USER CODE END DMA1_Channel4_5_6_7_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM14 global interrupt.
+  */
+void TIM14_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM14_IRQn 0 */
+	display_flash ^= 1UL << 0UL;
+	  ssd1306_Fill(Black);
+
+	  	// update sin1 timer with inverted encoder cnt
+	  	TIM6->PSC = sin1_max_arr - TIM2->CNT;
+
+	  	// update sin2 timer with inverted encoder cnt
+	  	TIM7->PSC = sin2_max_arr - TIM3->CNT;
+
+	  	// plot sin1 setting to display
+	    ssd1306_SetCursor(10, 5);
+	    char encoder1[11];
+	    snprintf(encoder1, sizeof(encoder1), "%lu", TIM2->CNT);
+	    ssd1306_WriteString(encoder1, Font_16x26, White, 0);
+
+	  	// plot sin2 setting to display
+	    ssd1306_SetCursor(90, 5);
+	    char encoder2[11];
+	    snprintf(encoder2, sizeof(encoder2), "%lu",TIM3->CNT);
+	    ssd1306_WriteString(encoder2, Font_16x26, White, 0);
+
+
+	    ssd1306_SetCursor(45, 20);
+	    if(TIM15->CR1 & TIM_CR1_CEN)
+		{
+	    	if(display_flash)
+	    	{
+				ssd1306_WriteString("TAP", Font_11x18, White, 0);
+	    	}
+		}
+	    else
+	    {
+			char tap_tempo[11];
+			snprintf(tap_tempo, sizeof(tap_tempo), "%lu",tap_count);
+			ssd1306_WriteString(tap_tempo, Font_11x18, White, 0);
+	    }
+
+
+	    ssd1306_UpdateScreen();
+  /* USER CODE END TIM14_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim14);
+  /* USER CODE BEGIN TIM14_IRQn 1 */
+
+  /* USER CODE END TIM14_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
