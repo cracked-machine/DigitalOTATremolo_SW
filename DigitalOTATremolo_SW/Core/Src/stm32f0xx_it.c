@@ -254,45 +254,52 @@ void DMA1_Channel4_5_6_7_IRQHandler(void)
 void TIM14_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM14_IRQn 0 */
+
 	display_flash ^= 1UL << 0UL;
-	  ssd1306_Fill(Black);
+	ssd1306_Fill(Black);
 
-	  	// update sin1 timer with inverted encoder cnt
-	  	TIM6->PSC = sin1_max_arr - TIM2->CNT;
+	// update sin1 timer with inverted encoder cnt
+	TIM6->PSC = sin1_max_arr - TIM2->CNT;
 
-	  	// update sin2 timer with inverted encoder cnt
-	  	TIM7->PSC = sin2_max_arr - TIM3->CNT;
+	// update sin2 timer with inverted encoder cnt
+	TIM7->PSC = sin2_max_arr - TIM3->CNT;
 
-	  	// plot sin1 setting to display
-	    ssd1306_SetCursor(10, 5);
-	    char encoder1[11];
-	    snprintf(encoder1, sizeof(encoder1), "%lu", TIM2->CNT);
-	    ssd1306_WriteString(encoder1, Font_16x26, White, 0);
+	// plot sin1 setting to display
+	ssd1306_SetCursor(10, 5);
+	char encoder1[11];
+	if(TIM6->CR1 & TIM_CR1_CEN)
+		snprintf(encoder1, sizeof(encoder1), "%lu", TIM2->CNT);
+	else
+		snprintf(encoder1, sizeof(encoder1), "OFF");
+	ssd1306_WriteString(encoder1, Font_16x26, White, 0);
 
-	  	// plot sin2 setting to display
-	    ssd1306_SetCursor(90, 5);
-	    char encoder2[11];
-	    snprintf(encoder2, sizeof(encoder2), "%lu",TIM3->CNT);
-	    ssd1306_WriteString(encoder2, Font_16x26, White, 0);
+	// plot sin2 setting to display
+	ssd1306_SetCursor(70, 5);
+	char encoder2[11];
+	if(TIM7->CR1 & TIM_CR1_CEN)
+		snprintf(encoder2, sizeof(encoder2), "%lu",TIM3->CNT);
+	else
+		snprintf(encoder2, sizeof(encoder2), "OFF");
+	ssd1306_WriteString(encoder2, Font_16x26, White, 0);
 
 
-	    ssd1306_SetCursor(45, 20);
-	    if(TIM15->CR1 & TIM_CR1_CEN)
+	ssd1306_SetCursor(45, 40);
+	if(TIM15->CR1 & TIM_CR1_CEN)
+	{
+		if(display_flash)
 		{
-	    	if(display_flash)
-	    	{
-				ssd1306_WriteString("TAP", Font_11x18, White, 0);
-	    	}
+			ssd1306_WriteString("TAP", Font_11x18, White, 0);
 		}
-	    else
-	    {
-			char tap_tempo[11];
-			snprintf(tap_tempo, sizeof(tap_tempo), "%lu",tap_count);
-			ssd1306_WriteString(tap_tempo, Font_11x18, White, 0);
-	    }
+	}
+	else
+	{
+		char tap_tempo[11];
+		snprintf(tap_tempo, sizeof(tap_tempo), "%lu",tap_count);
+		ssd1306_WriteString(tap_tempo, Font_11x18, White, 0);
+	}
 
 
-	    ssd1306_UpdateScreen();
+	ssd1306_UpdateScreen();
   /* USER CODE END TIM14_IRQn 0 */
   HAL_TIM_IRQHandler(&htim14);
   /* USER CODE BEGIN TIM14_IRQn 1 */

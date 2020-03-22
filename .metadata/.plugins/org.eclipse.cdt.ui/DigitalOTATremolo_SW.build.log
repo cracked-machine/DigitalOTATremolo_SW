@@ -1,4 +1,4 @@
-04:20:10 **** Incremental Build of configuration Debug for project DigitalOTATremolo_SW ****
+19:56:25 **** Incremental Build of configuration Debug for project DigitalOTATremolo_SW ****
 make -j4 all 
 arm-none-eabi-gcc "../Core/Src/stm32f0xx_it.c" -mcpu=cortex-m0 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F072xB -DSSD1306_USE_I2C -DDEBUG -c -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/CMSIS/Include -I../Core/Inc -I"/home/chris/Projects/Embedded/DigitalOTATremolo_SW/stm32-ssd1306/ssd1306" -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I"/home/chris/Projects/Embedded/DigitalOTATremolo_SW/SineWaveTable" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f0xx_it.d" -MT"Core/Src/stm32f0xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32f0xx_it.o"
 arm-none-eabi-gcc -o "DigitalOTATremolo_SW.elf" @"objects.list"   -mcpu=cortex-m0 -T"/home/chris/Projects/Embedded/DigitalOTATremolo_SW/DigitalOTATremolo_SW/STM32F072RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DigitalOTATremolo_SW.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -8,7 +8,7 @@ arm-none-eabi-objdump -h -S  DigitalOTATremolo_SW.elf  > "DigitalOTATremolo_SW.l
 arm-none-eabi-objcopy  -O binary  DigitalOTATremolo_SW.elf  "DigitalOTATremolo_SW.bin"
 arm-none-eabi-size   DigitalOTATremolo_SW.elf 
    text	   data	    bss	    dec	    hex	filename
-  27680	   2188	   3244	  33112	   8158	DigitalOTATremolo_SW.elf
+  27728	   2188	   3244	  33160	   8188	DigitalOTATremolo_SW.elf
 Finished building: default.size.stdout
 Finished building: DigitalOTATremolo_SW.bin
  
@@ -16,5 +16,5 @@ Finished building: DigitalOTATremolo_SW.bin
 Finished building: DigitalOTATremolo_SW.list
  
 
-04:20:10 Build Finished. 0 errors, 0 warnings. (took 836ms)
+19:56:26 Build Finished. 0 errors, 0 warnings. (took 793ms)
 
